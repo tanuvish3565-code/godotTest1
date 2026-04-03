@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://4pqund3nukl7"]
+
+[ext_resource type="Script" uid="uid://bss4mgihbqfdc" path="res://character_body_2d.gd" id="1_wtcfe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(80, 80)
+
+[node name="Node2D" type="Node2D" unique_id=995084360]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=820412850]
+script = ExtResource("1_wtcfe")
+
+[node name="ColorRect" type="ColorRect" parent="CharacterBody2D" unique_id=1079999248]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1691008164]
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=390100584]
+
+[node name="LeftBtn" type="Button" parent="CanvasLayer" unique_id=1550953122]
+offset_left = 20.0
+offset_top = 500.0
+offset_right = 120.0
+offset_bottom = 600.0
+text = "◀ for Left"
+
+[node name="RightBtn" type="Button" parent="CanvasLayer" unique_id=856978897]
+offset_left = 220.0
+offset_top = 500.0
+offset_right = 320.0
+offset_bottom = 600.0
+text = "▶ for Right"
+
+[node name="UpBtn" type="Button" parent="CanvasLayer" unique_id=120656335]
+offset_left = 120.0
+offset_top = 400.0
+offset_right = 220.0
+offset_bottom = 500.0
+text = "▲ for Up"
+
+[node name="DownBtn" type="Button" parent="CanvasLayer" unique_id=125091845]
+offset_left = 120.0
+offset_top = 500.0
+offset_right = 220.0
+offset_bottom = 600.0
+text = "▼ for Down"
+
+[connection signal="button_down" from="CanvasLayer/LeftBtn" to="CharacterBody2D" method="_on_left_btn_button_down"]
+[connection signal="button_up" from="CanvasLayer/LeftBtn" to="CharacterBody2D" method="_on_left_btn_button_up"]
+[connection signal="button_down" from="CanvasLayer/RightBtn" to="CharacterBody2D" method="_on_right_btn_button_down"]
+[connection signal="button_up" from="CanvasLayer/RightBtn" to="CharacterBody2D" method="_on_right_btn_button_up"]
+[connection signal="button_down" from="CanvasLayer/UpBtn" to="CharacterBody2D" method="_on_up_btn_button_down"]
+[connection signal="button_up" from="CanvasLayer/UpBtn" to="CharacterBody2D" method="_on_up_btn_button_up"]
+[connection signal="button_down" from="CanvasLayer/DownBtn" to="CharacterBody2D" method="_on_down_btn_button_down"]
+[connection signal="button_up" from="CanvasLayer/DownBtn" to="CharacterBody2D" method="_on_down_btn_button_up"]
