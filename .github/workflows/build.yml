@@ -11,14 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Export Godot APK
-        uses: dulvui/godot-android-export@v3
-        with:
-          godot-version: '4.4'
-          working-directory: '.'
+      - name: Download Godot
+        run: |
+          wget -q https://github.com/godotengine/godot-builds/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
+          unzip Godot_v4.4-stable_linux.x86_64.zip
+          chmod +x Godot_v4.4-stable_linux.x86_64
+          mv Godot_v4.4-stable_linux.x86_64 godot
+
+      - name: Download Android Templates
+        run: |
+          wget -q https://github.com/godotengine/godot-builds/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.4.stable
+          unzip Godot_v4.4-stable_export_templates.tpz -d tmp
+          mv tmp/templates/* ~/.local/share/godot/export_templates/4.4.stable/
+
+      - name: Build APK
+        run: |
+          ./godot --headless --export-debug "Android" game.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: game-apk
-          path: '*.apk'
+          path: game.apk
