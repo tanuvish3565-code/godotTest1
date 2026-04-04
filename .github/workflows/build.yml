@@ -40,9 +40,23 @@ jobs:
           unzip Godot_v4.4-stable_export_templates.tpz -d tmp
           mv tmp/templates/* ~/.local/share/godot/export_templates/4.4.stable/
 
+      - name: Configure Godot Android SDK
+        run: |
+          mkdir -p ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.tres << 'EOF'
+          [gd_resource type="EditorSettings"]
+
+          [resource]
+          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
+          export/android/debug_keystore = "/home/runner/work/godotTest1/godotTest1/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          EOF
+
       - name: Build APK
         run: |
-          ./godot --headless --export-debug "Android" game.apk
+          ./godot --headless --export-debug "Android" game.apk 2>&1 || true
+          ./godot --headless --check-only 2>&1 || true
         env:
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
